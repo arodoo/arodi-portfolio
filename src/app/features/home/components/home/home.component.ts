@@ -4,9 +4,8 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
 import { FishesComponent } from '../../../../shared/components/fishes/fishes.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
-import { AboutComponent } from '../../../about/components/about/about.component';
 
-import { ChartsSectionComponent } from '../../../charts/components/charts-section/charts-section.component';
+
 
 //loading-bar
 import { LoadingService } from '../../../../core/services/loading.service';
@@ -15,8 +14,7 @@ import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/l
 @Component({
     selector: 'app-home',
     imports: [LoadingBarComponent,
-        HeaderComponent, FooterComponent, NavbarComponent, FishesComponent,
-        ChartsSectionComponent],
+        HeaderComponent, FooterComponent, NavbarComponent, FishesComponent,],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })

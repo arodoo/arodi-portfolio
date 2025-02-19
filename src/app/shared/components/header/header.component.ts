@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ThreeSharkServiceService } from '../../../core/services/three-js/three-shark-service.service';
 
 @Component({

@@ -1,8 +1,0 @@
-<div class="chart-container" *ngIf="isBrowser">
-    <canvas baseChart [data]="bubbleChartData" [options]="bubbleChartOptions" [type]="bubbleChartType" class="chart-canvas">
-    </canvas>
-</div>
-<div class="text-container">
-    <app-text-section></app-text-section>
-</div>
-<button (click)="clearLines()">Borrar Líneas</button>
