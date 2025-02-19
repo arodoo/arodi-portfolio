@@ -1,0 +1,54 @@
+h1,
+p {
+    color: rgb(143 117 55);
+}
+
+nav {
+    position: absolute;
+    top: 0;
+    width: auto;
+    z-index: 2;
+    margin: 64px 0 0 48px;
+    //overflow: hidden;
+}
+
+a {
+    display: flex;
+    flex-direction: column;
+    white-space: wrap;
+    overflow: hidden;
+    border-right: 0.8px solid orange;
+    font-family: monospace;
+}
+
+.line1,
+.line2 {
+    display: block;
+    margin: 12.8px 0;
+}
+
+.line1 {
+    font-size: 24px;
+}
+
+.line2 {
+    font-size: 17.6px;
+    margin-left: 4.8px;
+}
+
+@media (max-width: 600px) {
+    .line1 {
+        font-size: 20.2px;
+        //margin: 4px 0 0 8px;
+    }
+
+    .line2 {
+        font-size: 15.4px;
+        //margin: 12.8px 0 0 12.8px;
+    }
+
+    nav {
+        margin: 32px 0 0 0;
+        padding: 10px;
+    }
+}

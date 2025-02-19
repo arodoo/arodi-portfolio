@@ -1,0 +1,14 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+html,
+body {
+
+}
+
+a {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid orange;
+    font-family: monospace;
+}

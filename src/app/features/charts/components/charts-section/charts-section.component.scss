@@ -1,0 +1,55 @@
+.chart-container {
+    width: 60%;
+    height: 600px;
+    float: left;
+}
+
+.text-container {
+    width: 40%;
+    float: right;
+}
+
+.chart-canvas{
+    box-shadow: 0 0 5px rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.bubble-glow{
+    animation: glow 1s forwards;
+}
+
+@keyframes glow {
+    from{
+        box-shadow: 0 0 5px rgb(255,255,255);
+    }
+    to{
+        box-shadow: 0 0 20px rgb(255,255,255, 1);
+    }
+}
+
+.bubble-fade {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        box-shadow: 0 0 20px rgb(255, 255, 255, 1);
+    }
+
+    to {
+        box-shadow: 0 0 5px rgb(255, 255, 255);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .chart-container,
+    .text-container {
+        width: 100%;
+        float: none;
+    }
+
+    .text-container {
+        margin-top: 20px;
+    }
+}

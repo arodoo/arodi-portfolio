@@ -1,0 +1,15 @@
+export const randomMessages: string[] = [
+    'In God we trust.',
+    'In the beginning, God created the heavens and the earth.',
+    'I know that I know nothing.',
+    'We will rise.',
+    'All we need is love.',
+    'Am I a butterfly dreaming I am a human?',
+    'I Think, Therefore I Am.',
+    'To be or not to be, that is the question.',
+    'The one charm about the past is that it is the past.',
+    'Por mi raza hablará mi espíritu.',
+    'Envy is ignorance, Imitation is Suicide.',
+    'Soy hombre: duro poco y es enorme la noche.',
+    'Beyond Good and Evil.',
+];

@@ -1,0 +1,19 @@
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+@media(max-width: 600px){
+    .row{
+        flex-direction: column;
+        overflow: visible;
+        //padding: 30px;
+    }
+    #sharks-container {
+        width: 100%;
+        height: auto;
+    }
+}

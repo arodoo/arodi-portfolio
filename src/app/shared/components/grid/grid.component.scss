@@ -1,0 +1,47 @@
+:host {
+    //display: inline-block;
+    position: relative;
+    //background-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.grid-container {
+    position: relative;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    position: absolute;
+    width: 1800px;
+    grid-template-columns: repeat(auto-fill, 180px);
+    grid-template-rows: repeat(auto-fill, 180px);
+    background-color: rgba(10, 10, 20, 0.8);
+    background-size: 200% 100%;
+    overflow: hidden;
+
+}
+
+.square {
+    width: 180px;
+    height: 180px;
+    background-color: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    filter: brightness(1.2);
+    transition: background-color 0.3s ease;
+
+}
+
+.square.gold {
+    background-color: rgba(168, 169, 173, 0.548);
+}
+
+.content {
+    margin: 80px;
+    pointer-events: none;
+}

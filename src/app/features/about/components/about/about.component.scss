@@ -1,0 +1,30 @@
+canvas {
+    max-width: 775px;
+    max-height: 461px;
+    position: relative;
+}
+
+p {
+    white-space: normal;
+    max-width: 100%;
+}
+
+
+
+.main {}
+
+.canvas-container {
+    width: 100%;
+    align-items: start;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.hidden {
+    opacity: 0;
+}
+
+.displayedText {
+    filter: brightness(1.2);
+}
