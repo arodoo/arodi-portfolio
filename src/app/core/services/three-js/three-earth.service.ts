@@ -6,6 +6,9 @@ import * as THREE from 'three';
   providedIn: 'root'
 })
 export class ThreeEarthService {
+  onResize() {
+    throw new Error('Method not implemented.');
+  }
 
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
@@ -38,7 +41,7 @@ export class ThreeEarthService {
         alpha: true
       });
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(80, 80);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -52,7 +55,7 @@ export class ThreeEarthService {
   }
 
   private setupCamera(canvas: ElementRef<HTMLCanvasElement>): void {
-    this.camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 50, 1e7);
+    this.camera = new THREE.PerspectiveCamera(25, 1, 50, 1e7);
     this.camera.position.z = 6371 * 5;
   }
 
@@ -149,9 +152,9 @@ export class ThreeEarthService {
 
   private onWindowResize(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.aspect = 1;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setSize(80, 80);
     }
   }
 }
