@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ThreeSharkServiceService } from '../../../core/services/three-js/three-shark-service.service';
+import { FishesComponent } from '../fishes/fishes.component';
 
 @Component({
     selector: 'app-header',
-    imports: [],
+    standalone: true,
+    imports: [FishesComponent],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })

@@ -1,8 +1,9 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ThreeAnimatedFishesService } from '../../../core/services/three-js/three-animated-fishes.service';
 
 @Component({
     selector: 'app-fishes',
+    standalone: true,
     imports: [],
     templateUrl: './fishes.component.html',
     styleUrl: './fishes.component.scss'

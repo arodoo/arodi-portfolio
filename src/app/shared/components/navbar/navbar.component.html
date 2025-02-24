@@ -1,4 +1,12 @@
 <!-- navbar.component.html -->
 <nav>
-
+  <mat-toolbar [class.scrolled]="isScrolled">
+    <div class="nav-container">
+      <button mat-button (click)="scrollToSection('home')">Home</button>
+      <button mat-button (click)="scrollToSection('about')">About</button>
+      <button mat-button (click)="scrollToSection('services')">Services</button>
+      <button mat-button (click)="scrollToSection('portfolio')">Portfolio</button>
+      <button mat-button (click)="scrollToSection('contact')">Contact</button>
+    </div>
+  </mat-toolbar>
 </nav>
