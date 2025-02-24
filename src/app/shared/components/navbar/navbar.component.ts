@@ -29,10 +29,6 @@ export class NavbarComponent implements AfterViewInit {
   ngAfterViewInit() {}
 
   scrollToSection(sectionId: string): void {
-    if (sectionId === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
     this.scrollService.scrollToElement(sectionId);
   }
 }

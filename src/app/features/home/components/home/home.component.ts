@@ -3,6 +3,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
+import { AboutComponent } from '../../../about/components/about/about.component';
 
 //loading-bar
 import { LoadingService } from '../../../../core/services/loading.service';
@@ -15,7 +16,8 @@ import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/l
         LoadingBarComponent,
         HeaderComponent, 
         FooterComponent, 
-        NavbarComponent
+        NavbarComponent,
+        AboutComponent
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
