@@ -1,15 +1,34 @@
-<section id="about" class="about-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="content">
-                    <h2>About Us</h2>
-                    <p>Welcome to our poetry community! We are passionate about sharing and celebrating the beauty of words.</p>
+<section class="about-section">
+    <div class="container-fluid">
+        <h2 class="text-center section-title mb-4">About Our Poetry Community</h2>
+        
+        <div class="row mb-4">
+            <div class="col-lg-10 mx-auto text-center">
+                <p class="mission-text">
+                    We are dedicated to creating a vibrant space where poets and poetry enthusiasts can connect, share, and grow together. Our platform celebrates the diverse voices that make poetry a powerful form of expression.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-4" *ngFor="let member of team">
+                <div class="card team-card text-center h-100 p-3">
+                    <div class="card-body">
+                        <i class="fas {{member.icon}} icon"></i>
+                        <h4 class="card-title mb-3">{{member.name}}</h4>
+                        <p class="card-text">{{member.description}}</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="earth-container">
-                    <canvas #earthCanvas class="earth-canvas"></canvas>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-10 mx-auto text-center">
+                <div class="card team-card p-3">
+                    <h3 class="mb-2">Our Mission</h3>
+                    <p class="mission-text mb-0">
+                        To foster a supportive environment where creativity flourishes, where every voice matters, and where the art of poetry continues to evolve and inspire.
+                    </p>
                 </div>
             </div>
         </div>
