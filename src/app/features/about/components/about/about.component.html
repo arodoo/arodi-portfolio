@@ -1,3 +1,4 @@
+<!--A box with olograms gettin out from each box-->
 <section class="about-section">
     <div class="container-fluid">
         <h2 class="text-center section-title mb-4">About Our Poetry Community</h2>
@@ -11,12 +12,35 @@
         </div>
 
         <div class="row g-3">
-            <div class="col-md-4" *ngFor="let member of team">
+            <!-- Editorial Team - Coming from left (animated) -->
+            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'left' : null" #firstCard>
                 <div class="card team-card text-center h-100 p-3">
                     <div class="card-body">
-                        <i class="fas {{member.icon}} icon"></i>
-                        <h4 class="card-title mb-3">{{member.name}}</h4>
-                        <p class="card-text">{{member.description}}</p>
+                        <i class="fas {{team[0].icon}} icon"></i>
+                        <h4 class="card-title mb-3">{{team[0].name}}</h4>
+                        <p class="card-text">{{team[0].description}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Team - No animation -->
+            <div class="col-md-4">
+                <div class="card team-card text-center h-100 p-3">
+                    <div class="card-body">
+                        <i class="fas {{team[1].icon}} icon"></i>
+                        <h4 class="card-title mb-3">{{team[1].name}}</h4>
+                        <p class="card-text">{{team[1].description}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Team - Coming from right (animated) -->
+            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'right' : null" #lastCard>
+                <div class="card team-card text-center h-100 p-3">
+                    <div class="card-body">
+                        <i class="fas {{team[2].icon}} icon"></i>
+                        <h4 class="card-title mb-3">{{team[2].name}}</h4>
+                        <p class="card-text">{{team[2].description}}</p>
                     </div>
                 </div>
             </div>
@@ -33,4 +57,7 @@
             </div>
         </div>
     </div>
+    
+    <!-- Add a debug section at the bottom to help force scrolling if needed -->
+    <div style="margin-top: 20px; opacity: 0.01; height: 5px;">Animation trigger helper</div>
 </section>

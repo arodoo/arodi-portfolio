@@ -3,6 +3,8 @@
     margin: 0 auto;
     text-align: center;
     color: white;
+    min-height: 100vh; // Ensure the section is tall enough to scroll
+    padding-bottom: 100px; // Add some bottom padding
 
     h2, h3, h4, p {
         color: white;
@@ -15,8 +17,8 @@
         backdrop-filter: blur(5px);
         
         &:hover {
-            transform: translateY(-5px);
             border-color: #673ab7;
+            box-shadow: 0 5px 15px rgba(103, 58, 183, 0.3);
         }
 
         .icon {
