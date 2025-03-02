@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import gsap from 'gsap';
 
@@ -6,16 +6,22 @@ import gsap from 'gsap';
   selector: '[appAboutUsScrollAnimation]',
   standalone: true
 })
-export class AboutUsScrollAnimationDirective implements OnInit, OnChanges, OnDestroy {
+export class AboutUsScrollAnimationDirective implements OnInit, OnDestroy {
   @Input('appAboutUsScrollAnimation') animateFrom: 'left' | 'right' | null = 'right';
+  @Input() exitTo: 'left' | 'right' | null = null;
   
-  private observer: IntersectionObserver | null = null;
-  private isBrowser: boolean;
-  private isInView = false;
-  private isSetup = false;
-  private currentAnimation: gsap.core.Tween | null = null;
-  private animationAllowed = true;
+  // Element state tracking
   private elementId: string = '';
+  private isVisible = false;
+  private hasExited = false;
+  private isAnimating = false;
+  
+  // Browser and event handlers
+  private isBrowser: boolean;
+  private scrollHandler: any = null;
+  private resizeHandler: any = null;
+  private lastScrollY = 0;
+  private scrollingDown = true;
 
   constructor(
     private el: ElementRef,
@@ -27,145 +33,213 @@ export class AboutUsScrollAnimationDirective implements OnInit, OnChanges, OnDes
   ngOnInit(): void {
     if (!this.isBrowser) return;
     
-    this.elementId = this.getElementId();
-    
-    if (this.animateFrom) {
-      this.setupAnimation();
+    this.elementId = this.el.nativeElement.id || 'element';
+    this.initializeAnimation();
+    this.setupEventHandlers();
+  }
+  
+  // ===== INITIALIZATION METHODS =====
+  
+  private initializeAnimation(): void {
+    // Initial setup based on element type
+    if (this.isHeaderElement()) {
+      // Headers only have exit animations - no setup required
+    } else if (this.isTeamElement()) {
+      // Team cards need entrance animation setup
+      this.setupEntryState();
     }
   }
   
-  private getElementId(): string {
-    const element = this.el.nativeElement;
+  private setupEventHandlers(): void {
+    if (!this.isBrowser) return;
     
-    if (element.id) {
-      return element.id;
-    }
+    this.scrollHandler = () => {
+      const currentScrollY = window.scrollY;
+      this.scrollingDown = currentScrollY > this.lastScrollY;
+      this.lastScrollY = currentScrollY;
+      this.handleScrollUpdate();
+    };
     
-    if (element.classList && element.classList.length > 0) {
-      return Array.from(element.classList).join('-');
-    }
+    this.resizeHandler = () => this.handleScrollUpdate();
     
-    return element.tagName?.toLowerCase() || 'element';
+    window.addEventListener('scroll', this.scrollHandler, { passive: true });
+    window.addEventListener('resize', this.resizeHandler, { passive: true });
+    
+    // Initial check after DOM has settled
+    setTimeout(() => this.handleScrollUpdate(), 500);
   }
   
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['animateFrom'] && 
-        this.isBrowser && 
-        this.animateFrom && 
-        !this.isSetup) {
-      this.setupAnimation();
+  // ===== ELEMENT TYPE DETECTION =====
+  
+  private isHeaderElement(): boolean {
+    return this.elementId === 'about-heading' || this.elementId === 'intro-text';
+  }
+  
+  private isTeamElement(): boolean {
+    return this.elementId === 'editorial-team' || this.elementId === 'technical-team';
+  }
+  
+  // ===== POSITION DETECTION =====
+  
+  private handleScrollUpdate(): void {
+    if (this.isAnimating) return;
+    
+    // Get element visibility measurements
+    const visibility = this.calculateVisibility();
+    
+    // Choose the right handler based on element type
+    if (this.isHeaderElement()) {
+      this.handleHeaderElementScroll(visibility);
+    } else if (this.isTeamElement()) {
+      this.handleTeamElementScroll(visibility);
     }
   }
   
-  private setupAnimation(): void {
-    if (this.isSetup) return;
+  private calculateVisibility() {
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
     
-    this.isSetup = true;
-    this.setInitialState();
+    // Calculate how much of the element is visible
+    const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+    const visibleRatio = visibleHeight > 0 ? visibleHeight / rect.height : 0;
     
-    setTimeout(() => {
-      this.createIntersectionObserver();
-    }, 300);
+    // Determine the element's position relative to the viewport
+    return {
+      visibleRatio,
+      isFullyVisible: visibleRatio >= 0.95,
+      isPartiallyVisible: visibleRatio > 0.1,
+      isNearlyInvisible: visibleRatio < 0.1,
+      isAboveViewport: rect.bottom < windowHeight * 0.2, // Top 20% of viewport
+      isBelowViewport: rect.top > windowHeight * 0.8, // Bottom 20% of viewport
+      rect
+    };
   }
-
-  private forceStopAnimation(): void {
-    if (this.currentAnimation) {
-      this.currentAnimation.kill();
-      this.currentAnimation = null;
+  
+  // ===== ELEMENT-SPECIFIC SCROLL HANDLERS =====
+  
+  private handleHeaderElementScroll(visibility: any): void {
+    // CASE: Header is leaving viewport while scrolling down - play exit animation
+    if (this.isVisible && visibility.isNearlyInvisible && this.scrollingDown && 
+        visibility.isAboveViewport && this.exitTo) {
+      this.isVisible = false;
+      this.hasExited = true;
+      this.playExitAnimation();
     }
-    
-    gsap.killTweensOf(this.el.nativeElement);
+    // CASE: Header is entering viewport while scrolling up after exiting - play reverse animation
+    else if (!this.isVisible && visibility.isPartiallyVisible && !this.scrollingDown && 
+             this.hasExited && this.exitTo) {
+      this.isVisible = true;
+      this.hasExited = false;
+      this.playReverseExitAnimation();
+    }
   }
-
-  private setInitialState(): void {
+  
+  private handleTeamElementScroll(visibility: any): void {
+    // CASE: Team element is entering viewport - play entrance animation
+    if (!this.isVisible && visibility.isPartiallyVisible && this.animateFrom) {
+      this.isVisible = true;
+      this.playEntranceAnimation();
+    }
+    // CASE: Team element is leaving viewport downward while scrolling up - reset for next entrance
+    else if (this.isVisible && visibility.isNearlyInvisible && 
+             !this.scrollingDown && visibility.isBelowViewport) {
+      this.isVisible = false;
+      this.setupEntryState();
+    }
+  }
+  
+  // ===== ANIMATION STATE SETUP =====
+  
+  private setupEntryState(): void {
     if (!this.animateFrom) return;
     
-    this.forceStopAnimation();
-    
     const isLeft = this.animateFrom === 'left';
+    gsap.killTweensOf(this.el.nativeElement);
     
     gsap.set(this.el.nativeElement, { 
-      x: isLeft ? -80 : 80,
+      x: isLeft ? -100 : 100,
       opacity: 0,
       rotation: isLeft ? -20 : 20,
       scale: 0.9
     });
   }
-
-  private createIntersectionObserver(): void {
-    if (!this.animateFrom || this.observer) return;
+  
+  // ===== ANIMATION PLAYBACK =====
+  
+  private playEntranceAnimation(): void {
+    if (!this.animateFrom || this.isAnimating) return;
     
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // Element entering viewport
-        if (entry.isIntersecting && !this.isInView && this.animationAllowed) {
-          this.isInView = true;
-          this.animateElement();
-        } 
-        // Element leaving viewport
-        else if (!entry.isIntersecting && this.isInView) {
-          this.isInView = false;
-          
-          this.animationAllowed = false;
-          
-          setTimeout(() => {
-            this.setInitialState();
-            this.animationAllowed = true;
-          }, 100);
-        }
-      });
-    }, { 
-      threshold: [0.1],
-      rootMargin: '0px 0px -10% 0px'
-    });
+    this.isAnimating = true;
+    gsap.killTweensOf(this.el.nativeElement);
     
-    this.observer.observe(this.el.nativeElement);
-  }
-
-  private animateElement(): void {
-    if (!this.animateFrom) return;
-    
-    this.forceStopAnimation();
-    
-    const animationConfig = this.getAnimationConfigForElement();
-    
-    this.currentAnimation = gsap.to(this.el.nativeElement, {
+    gsap.to(this.el.nativeElement, {
       x: 0,
       rotation: 0,
       opacity: 1,
       scale: 1,
-      duration: animationConfig.duration,
-      ease: animationConfig.ease,
+      duration: this.isHeaderElement() ? 0.6 : 0.8,
+      ease: "back.out(1.5)",
       onComplete: () => {
-        this.currentAnimation = null;
+        this.isAnimating = false;
+      }
+    });
+  }
+  
+  private playExitAnimation(): void {
+    if (!this.exitTo || this.isAnimating) return;
+    
+    this.isAnimating = true;
+    gsap.killTweensOf(this.el.nativeElement);
+    
+    const isLeft = this.exitTo === 'left';
+    gsap.to(this.el.nativeElement, {
+      x: isLeft ? -120 : 120,
+      opacity: 0,
+      rotation: isLeft ? -15 : 15,
+      scale: 0.9,
+      duration: this.isHeaderElement() ? 0.5 : 0.7,
+      ease: "power2.in",
+      onComplete: () => {
+        this.isAnimating = false;
+      }
+    });
+  }
+  
+  private playReverseExitAnimation(): void {
+    if (!this.exitTo || this.isAnimating) return;
+    
+    const isLeft = this.exitTo === 'left';
+    
+    // Set to exited state before animating
+    gsap.set(this.el.nativeElement, {
+      x: isLeft ? -120 : 120,
+      opacity: 0,
+      rotation: isLeft ? -15 : 15,
+      scale: 0.9
+    });
+    
+    this.isAnimating = true;
+    gsap.to(this.el.nativeElement, {
+      x: 0,
+      rotation: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      ease: "power2.out",
+      onComplete: () => {
+        this.isAnimating = false;
       }
     });
   }
 
-  private getAnimationConfigForElement(): { duration: number, ease: string } {
-    let config = {
-      duration: 1,
-      ease: "back.out(1.7)"
-    };
-    
-    if (this.elementId === 'editorial-team') {
-      config.duration = 1.2;
-    } else if (this.elementId === 'technical-team') {
-      config.duration = 0.9;
-      config.ease = "power3.out";
-    }
-    
-    return config;
-  }
-
   ngOnDestroy(): void {
     if (this.isBrowser) {
-      this.forceStopAnimation();
+      // Clean up event handlers
+      if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
+      if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
       
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer = null;
-      }
+      // Kill any active animations
+      gsap.killTweensOf(this.el.nativeElement);
     }
   }
 }

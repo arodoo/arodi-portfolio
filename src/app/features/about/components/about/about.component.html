@@ -1,19 +1,19 @@
 <!--A box with olograms gettin out from each box-->
-<section class="about-section" id="about-section">
+<section class="about-section">
     <div class="container-fluid">
-        <h2 class="text-center section-title mb-4" id="about-heading">About Our Poetry Community</h2>
+        <h2 class="text-center section-title mb-4">About Our Poetry Community</h2>
         
         <div class="row mb-4">
-            <div class="col-lg-10 mx-auto text-center" id="intro-text">
+            <div class="col-lg-10 mx-auto text-center">
                 <p class="mission-text">
                     We are dedicated to creating a vibrant space where poets and poetry enthusiasts can connect, share, and grow together. Our platform celebrates the diverse voices that make poetry a powerful form of expression.
                 </p>
             </div>
         </div>
 
-        <div class="row g-3" id="team-container">
-            <!-- Editorial Team - Coming from left -->
-            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'left' : null" id="editorial-team">
+        <div class="row g-3">
+            <!-- Editorial Team - Coming from left (animated) -->
+            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'left' : null" #firstCard>
                 <div class="card team-card text-center h-100 p-3">
                     <div class="card-body">
                         <i class="fas {{team[0].icon}} icon"></i>
@@ -24,7 +24,7 @@
             </div>
 
             <!-- Community Team - No animation -->
-            <div class="col-md-4" id="community-team">
+            <div class="col-md-4">
                 <div class="card team-card text-center h-100 p-3">
                     <div class="card-body">
                         <i class="fas {{team[1].icon}} icon"></i>
@@ -34,8 +34,8 @@
                 </div>
             </div>
 
-            <!-- Technical Team - Coming from right -->
-            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'right' : null" id="technical-team">
+            <!-- Technical Team - Coming from right (animated) -->
+            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'right' : null" #lastCard>
                 <div class="card team-card text-center h-100 p-3">
                     <div class="card-body">
                         <i class="fas {{team[2].icon}} icon"></i>
@@ -47,8 +47,8 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-lg-10 mx-auto text-center" id="mission-container">
-                <div class="card team-card p-3" id="mission-card">
+            <div class="col-lg-10 mx-auto text-center">
+                <div class="card team-card p-3">
                     <h3 class="mb-2">Our Mission</h3>
                     <p class="mission-text mb-0">
                         To foster a supportive environment where creativity flourishes, where every voice matters, and where the art of poetry continues to evolve and inspire.
@@ -57,4 +57,7 @@
             </div>
         </div>
     </div>
+    
+    <!-- Add a debug section at the bottom to help force scrolling if needed -->
+    <div style="margin-top: 20px; opacity: 0.01; height: 5px;">Animation trigger helper</div>
 </section>
