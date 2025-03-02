@@ -41,32 +41,15 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     if (!this.isBrowser) return;
     
-    console.log('About component initialized, setting up animations');
-    
     // Enable animations with a delay to ensure the page is fully rendered
     setTimeout(() => {
       this.animationsEnabled = true;
-      this.cdr.detectChanges(); // Force update to ensure binding changes are applied
-      console.log('Animations enabled, ready for scrolling');
+      this.cdr.detectChanges();
       
       // Force a scroll event to check visibility
       setTimeout(() => {
-        console.log('Dispatching scroll event');
         window.dispatchEvent(new Event('scroll'));
       }, 500);
     }, 1000);
-  }
-  
-  // Add a helper method to debug
-  isElementInViewport(el: HTMLElement): boolean {
-    if (!this.isBrowser) return false;
-    
-    const rect = el.getBoundingClientRect();
-    const isVisible = (
-      rect.top <= window.innerHeight &&
-      rect.bottom >= 0
-    );
-    console.log('Visibility check:', el.tagName, isVisible);
-    return isVisible;
   }
 }
