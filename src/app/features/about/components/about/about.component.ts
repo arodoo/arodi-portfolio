@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+// Make sure we're using the right directive
 import { AboutUsScrollAnimationDirective } from '../../../../shared/directives/about-us-scroll-animation.directive';
 
 @Component({
@@ -9,9 +10,10 @@ import { AboutUsScrollAnimationDirective } from '../../../../shared/directives/a
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss'
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent implements OnInit, OnDestroy {
   private isBrowser: boolean;
   animationsEnabled = false;
+  private scrollListener: any = null;
   
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
@@ -43,18 +45,63 @@ export class AboutComponent implements OnInit {
     
     console.log('About component initialized, setting up animations');
     
-    // Enable animations with a delay to ensure the page is fully rendered
+    // Setup debug panel updates
+    this.setupDebugPanel();
+    
+    // Make sure animations are enabled when the component loads - this is critical
+    this.animationsEnabled = true;
+    
+    // Force an initial scroll event - needed for animations on page load
     setTimeout(() => {
-      this.animationsEnabled = true;
-      this.cdr.detectChanges(); // Force update to ensure binding changes are applied
-      console.log('Animations enabled, ready for scrolling');
-      
-      // Force a scroll event to check visibility
-      setTimeout(() => {
-        console.log('Dispatching scroll event');
-        window.dispatchEvent(new Event('scroll'));
-      }, 500);
-    }, 1000);
+      console.log('Triggering initial scroll/animation check');
+      window.dispatchEvent(new Event('scroll'));
+      this.updateDebugState('Animations active - ready for scrolling');
+    }, 500);
+  }
+  
+  private setupDebugPanel(): void {
+    // Update the scroll position in the debug panel
+    this.scrollListener = () => {
+      this.updateScrollDebugPanel();
+    };
+    
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
+    window.addEventListener('resize', this.scrollListener, { passive: true });
+    
+    // Initial update
+    this.updateScrollDebugPanel();
+  }
+  
+  private updateScrollDebugPanel(): void {
+    const scrollY = window.scrollY;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    const scrollPositionEl = document.getElementById('debug-scroll-position');
+    const viewportSizeEl = document.getElementById('debug-viewport-size');
+    
+    if (scrollPositionEl) {
+      scrollPositionEl.textContent = `Scroll: ${scrollY}px`;
+    }
+    
+    if (viewportSizeEl) {
+      viewportSizeEl.textContent = `Viewport: ${viewportWidth}px x ${viewportHeight}px`;
+    }
+  }
+  
+  private updateDebugState(state: string): void {
+    const stateEl = document.getElementById('debug-animation-state');
+    if (stateEl) {
+      stateEl.textContent = `State: ${state}`;
+    }
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up event listeners
+    if (this.isBrowser && this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      window.removeEventListener('resize', this.scrollListener);
+    }
   }
   
   // Add a helper method to debug

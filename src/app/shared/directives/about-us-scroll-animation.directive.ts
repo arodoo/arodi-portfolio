@@ -34,8 +34,15 @@ export class AboutUsScrollAnimationDirective implements OnInit, OnDestroy {
     if (!this.isBrowser) return;
     
     this.elementId = this.el.nativeElement.id || 'element';
+    
+    // Very important log to debug if the directive is being attached properly
+    console.log(`Animation directive attached to ${this.elementId} with direction: ${this.animateFrom}`);
+    
     this.initializeAnimation();
     this.setupEventHandlers();
+    
+    // Immediately check visibility instead of waiting
+    this.handleScrollUpdate();
   }
   
   // ===== INITIALIZATION METHODS =====
@@ -169,6 +176,8 @@ export class AboutUsScrollAnimationDirective implements OnInit, OnDestroy {
   private playEntranceAnimation(): void {
     if (!this.animateFrom || this.isAnimating) return;
     
+    console.log(`Playing entrance animation for ${this.elementId} from ${this.animateFrom}`);
+    
     this.isAnimating = true;
     gsap.killTweensOf(this.el.nativeElement);
     
@@ -179,7 +188,9 @@ export class AboutUsScrollAnimationDirective implements OnInit, OnDestroy {
       scale: 1,
       duration: this.isHeaderElement() ? 0.6 : 0.8,
       ease: "back.out(1.5)",
+      onStart: () => console.log(`Animation started for ${this.elementId}`),
       onComplete: () => {
+        console.log(`Animation completed for ${this.elementId}`);
         this.isAnimating = false;
       }
     });
