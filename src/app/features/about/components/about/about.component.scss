@@ -1,10 +1,31 @@
 .about-section {
-    padding: 0 180px;
+    padding: 2rem 1rem; // Default padding for all devices
     margin: 0 auto;
     text-align: center;
     color: white;
-    min-height: 100vh; // Ensure the section is tall enough to scroll
-    padding-bottom: 100px; // Add some bottom padding
+    min-height: 100vh;
+    padding-bottom: 100px;
+
+    // Responsive padding using media queries
+    @media (min-width: 576px) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    
+    @media (min-width: 992px) {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+    
+    @media (min-width: 1200px) {
+        padding-left: 180px;
+        padding-right: 180px;
+    }
 
     h2, h3, h4, p {
         color: white;
@@ -15,6 +36,7 @@
         background: transparent;
         border: 1px solid rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(5px);
+        margin-bottom: 1.5rem; // Add space between cards on mobile
         
         &:hover {
             border-color: #673ab7;
