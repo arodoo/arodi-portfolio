@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-// Make sure we're using the right directive
 import { AboutUsScrollAnimationDirective } from '../../../../shared/directives/about-us-scroll-animation.directive';
 
 @Component({
