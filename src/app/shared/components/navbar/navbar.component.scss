@@ -1,17 +1,20 @@
+// Main toolbar styles
 mat-toolbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 1000; // Increase z-index to ensure it stays above other elements
     background: transparent;
     transition: all 0.3s ease;
     padding: 1rem 2rem;
 
+    // Scrolled state styling
     &.scrolled {
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-        .nav-container button {
+        .nav-container button,
+        .mobile-menu button {
             opacity: 0.7;
 
             &:hover {
@@ -25,6 +28,7 @@ mat-toolbar {
         }
     }
 
+    // Desktop container (preserving your existing styles)
     .nav-container {
         display: flex;
         justify-content: center;
@@ -50,5 +54,102 @@ mat-toolbar {
                     1px 1px 0 rgba(192, 192, 192, 0.5);
             }
         }
+    }
+
+    // Mobile container (new)
+        .mobile-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+    
+            .brand-name {
+                font-size: 1.5rem;
+                color: white;
+                font-weight: bold;
+            }
+    
+            mat-icon {
+                color: white;
+                font-size: 24px;
+            }
+        }
+}
+
+// Mobile menu styles
+.mobile-menu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    /* Changed from flex to none */
+    flex-direction: column;
+    transition: all 0.3s ease;
+    z-index: 999;
+    visibility: hidden;
+    /* Added visibility control */
+    opacity: 0;
+    /* Added opacity for better transitions */
+
+    &.open {
+        display: flex;
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 767px) {
+    .mobile-menu {
+        top: 56px; // Adjusted for smaller toolbar on mobile
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-menu {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+
+// Media queries for responsive adjustments
+@media (max-width: 1280px) {
+    mat-toolbar {
+        padding: 0.75rem 1.5rem;
+
+        .nav-container {
+            gap: 2rem;
+
+            button {
+                font-size: 1.1rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    mat-toolbar {
+        padding: 0.75rem 1rem;
+
+        .nav-container {
+            gap: 1rem;
+
+            button {
+                font-size: 1rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    mat-toolbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .mobile-menu {
+        top: 56px; // Adjust for smaller toolbar on mobile
     }
 }

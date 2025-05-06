@@ -1,7 +1,15 @@
-<!-- navbar.component.html -->
 <nav>
   <mat-toolbar [class.scrolled]="isScrolled">
-    <div class="nav-container">
+    <!-- Mobile View (Hamburger Menu) -->
+    <div class="mobile-container d-flex d-md-none w-100">
+      <button mat-icon-button aria-label="Menu button" (click)="toggleMobileMenu()">
+        <mat-icon>{{ isMobileMenuOpen ? "close" : "menu" }}</mat-icon>
+      </button>
+      <span class="brand-name">Poetry</span>
+    </div>
+
+    <!-- Desktop View (Navbar) -->
+    <div class="nav-container d-none d-md-flex">
       <button mat-button (click)="scrollToSection('home')">Home</button>
       <button mat-button (click)="scrollToSection('about')">About</button>
       <button mat-button (click)="scrollToSection('services')">Services</button>
@@ -9,4 +17,13 @@
       <button mat-button (click)="scrollToSection('contact')">Contact</button>
     </div>
   </mat-toolbar>
+
+  <!-- Mobile Menu (Shows when toggled) -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <button mat-button (click)="scrollToSection('home'); closeMobileMenu()">Home</button>
+    <button mat-button (click)="scrollToSection('about'); closeMobileMenu()">About</button>
+    <button mat-button (click)="scrollToSection('services'); closeMobileMenu()">Services</button>
+    <button mat-button (click)="scrollToSection('portfolio'); closeMobileMenu()">Portfolio</button>
+    <button mat-button (click)="scrollToSection('contact'); closeMobileMenu()">Contact</button>
+  </div>
 </nav>
