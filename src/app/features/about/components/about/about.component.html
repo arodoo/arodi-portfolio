@@ -1,77 +1,75 @@
 <!--A box with olograms gettin out from each box-->
 <section class="about-section">
     <div class="container-fluid">
-        <h2 class="text-center section-title mb-4" id="about-heading">About Our Poetry Community</h2>
-        
-        <div class="row mb-4">
-            <div class="col-lg-10 mx-auto text-center">
-                <p class="mission-text">
-                    We are dedicated to creating a vibrant space where poets and poetry enthusiasts can connect, share, and grow together. Our platform celebrates the diverse voices that make poetry a powerful form of expression.
-                </p>
-            </div>
-        </div>
+        <section appAboutUsScrollAnimationLeaving="right">
+            <h2 class="text-center section-title mb-4" id="about-heading">About Our Poetry Community</h2>
 
-        <div class="row g-3">
-            <!-- Editorial Team - Coming from left (animated) -->
-            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'left' : null" id="editorial-team" #firstCard>
-                <div class="card team-card text-center h-100 p-3">
-                    <div class="card-body">
-                        <i class="fas {{team[0].icon}} icon"></i>
-                        <h4 class="card-title mb-3">{{team[0].name}}</h4>
-                        <p class="card-text">{{team[0].description}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Community Team - No animation -->
-            <div class="col-md-4" id="community-team">
-                <div class="card team-card text-center h-100 p-3">
-                    <div class="card-body">
-                        <i class="fas {{team[1].icon}} icon"></i>
-                        <h4 class="card-title mb-3">{{team[1].name}}</h4>
-                        <p class="card-text">{{team[1].description}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technical Team - Coming from right (animated) -->
-            <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'right' : null" id="technical-team" #lastCard>
-                <div class="card team-card text-center h-100 p-3">
-                    <div class="card-body">
-                        <i class="fas {{team[2].icon}} icon"></i>
-                        <h4 class="card-title mb-3">{{team[2].name}}</h4>
-                        <p class="card-text">{{team[2].description}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4">
-            <div class="col-lg-10 mx-auto text-center">
-                <div class="card team-card p-3">
-                    <h3 class="mb-2">Our Mission</h3>
-                    <p class="mission-text mb-0">
-                        To foster a supportive environment where creativity flourishes, where every voice matters, and where the art of poetry continues to evolve and inspire.
+            <div class="row mb-4">
+                <div class="col-lg-10 mx-auto text-center">
+                    <p class="mission-text">
+                        We are dedicated to creating a vibrant space where poets and poetry enthusiasts can connect,
+                        share,
+                        and grow together. Our platform celebrates the diverse voices that make poetry a powerful form
+                        of
+                        expression.
                     </p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section appAboutUsScrollAnimationLeaving="scale">
+            <div class="row g-3">
+                <!-- Editorial Team - Coming from left (animated) -->
+                <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'left' : null"
+                    id="editorial-team" #firstCard>
+                    <div class="card team-card text-center h-100 p-3">
+                        <div class="card-body">
+                            <i class="fas {{team[0].icon}} icon"></i>
+                            <h4 class="card-title mb-3">{{team[0].name}}</h4>
+                            <p class="card-text">{{team[0].description}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Team - No animation -->
+                <div class="col-md-4" id="community-team">
+                    <div class="card team-card text-center h-100 p-3">
+                        <div class="card-body">
+                            <i class="fas {{team[1].icon}} icon"></i>
+                            <h4 class="card-title mb-3">{{team[1].name}}</h4>
+                            <p class="card-text">{{team[1].description}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Team - Coming from right (animated) -->
+                <div class="col-md-4" [appAboutUsScrollAnimation]="animationsEnabled ? 'right' : null"
+                    id="technical-team" #lastCard>
+                    <div class="card team-card text-center h-100 p-3">
+                        <div class="card-body">
+                            <i class="fas {{team[2].icon}} icon"></i>
+                            <h4 class="card-title mb-3">{{team[2].name}}</h4>
+                            <p class="card-text">{{team[2].description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section appAboutUsScrollAnimationLeaving="left">
+            <div class="row mt-4">
+                <div class="col-lg-10 mx-auto text-center">
+                    <div class="card team-card p-3">
+                        <h3 class="mb-2">Our Mission</h3>
+                        <p class="mission-text mb-0">
+                            To foster a supportive environment where creativity flourishes, where every voice matters,
+                            and
+                            where the art of poetry continues to evolve and inspire.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    
-    <!-- Add a debug section at the bottom to help force scrolling if needed -->
-    <!-- <div style="margin-top: 20px; opacity: 0.01; height: 5px;">Animation trigger helper</div>
-     -->
-    <!-- Visible debug panel -->
-   <!--  <div id="animation-debug" style="position: fixed; bottom: 10px; right: 10px; 
-         background: rgba(0,0,0,0.8); color: white; padding: 15px; font-size: 12px; 
-         z-index: 9999; max-width: 300px; text-align: left; border-radius: 5px;">
-        <div style="font-weight: bold; margin-bottom: 5px;">Animation Debug</div>
-        <div id="debug-scroll-position">Scroll: 0px</div>
-        <div id="debug-viewport-size">Viewport: 0px x 0px</div>
-        <div id="debug-animation-state">State: Initializing...</div>
-        <div style="margin-top: 5px; font-size: 10px;">Elements with animations: 
-          <span style="color: #ff9800;">editorial-team</span>, 
-          <span style="color: #ff9800;">technical-team</span>
-        </div>
-    </div> -->
+
 </section>
