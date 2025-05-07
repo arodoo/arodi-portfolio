@@ -9,9 +9,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 })
 export class AboutUsScrollAnimationLeavingDirective implements OnInit, OnDestroy {
   @Input('appAboutUsScrollAnimationLeaving') effectType: 'right' | 'left' | 'scale' = 'right';
-
+  
   private isBrowser: boolean;
-  private scrollTrigger: ScrollTrigger | null = null;
+  private scrollTriggers: any[] = [];  // Changed type to any[] to avoid TypeScript errors
 
   constructor(
     private el: ElementRef,
@@ -22,79 +22,62 @@ export class AboutUsScrollAnimationLeavingDirective implements OnInit, OnDestroy
 
   ngOnInit(): void {
     if (!this.isBrowser) return;
-
-    // Register ScrollTrigger plugin
+    
+    // Correct way to register ScrollTrigger in newer GSAP versions
     gsap.registerPlugin(ScrollTrigger);
-
-    // Setup the appropriate animation based on effect type
-    this.setupScrollAnimation();
+    
+    // Set a small delay to ensure DOM is ready
+    setTimeout(() => {
+      this.setupScrollAnimation();
+    }, 100);
   }
-
+  
   private setupScrollAnimation(): void {
     const element = this.el.nativeElement;
-    const elementId = element.id || 'element';
-
-    switch (this.effectType) {
+    
+    // Start with a clean state - make sure we don't have transform properties already
+    gsap.set(element, { clearProps: "x,scale,opacity" });
+    
+    // Create a timeline for better control
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: element,
+        start: "top 60%",    // Adjusted for better visibility
+        end: "bottom 20%",   // Adjusted for better animation completion
+        scrub: 1,            // Smoother scrubbing
+        markers: true,      // Set to true when debugging
+        toggleActions: "play none reverse none"
+      }
+    });
+    
+    // Add the appropriate animation effect
+    switch(this.effectType) {
       case 'right':
-        this.createRightExitAnimation(element);
+        tl.to(element, { x: '30vw', opacity: 0.2 });  // Use viewport units for more consistent behavior
         break;
       case 'left':
-        this.createLeftExitAnimation(element);
+        tl.to(element, { x: '-30vw', opacity: 0.2 });
         break;
       case 'scale':
-        this.createScaleAnimation(element);
+        tl.to(element, { scale: 0.6, opacity: 0.2 });
         break;
     }
-  }
-
-  private createRightExitAnimation(element: HTMLElement): void {
-    // Animation: Move to the right when scrolling down/away
-    gsap.to(element, {
-      x: '100%',
-      opacity: 0,
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 20%', // Start when top of element is 20% from top of viewport
-        end: 'top -30%',  // End when top of element is 30% above viewport
-        scrub: 1,         // Smooth animation that follows scroll position with 1s lag
-        toggleActions: 'play none reverse none' // Play on scroll down, reverse on scroll up
-      }
-    });
-  }
-
-  private createLeftExitAnimation(element: HTMLElement): void {
-    // Animation: Move to the left when scrolling down/away
-    gsap.to(element, {
-      x: '-100%',
-      opacity: 0,
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 20%',
-        end: 'top -30%',
-        scrub: 1,
-        toggleActions: 'play none reverse none'
-      }
-    });
-  }
-
-  private createScaleAnimation(element: HTMLElement): void {
-    // Animation: Scale down when scrolling down/away
-    gsap.to(element, {
-      scale: 0.1,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 20%',
-        end: 'top -30%',
-        scrub: 1,
-        toggleActions: 'play none reverse none'
-      }
-    });
+    
+    // Store the ScrollTrigger for cleanup
+    this.scrollTriggers.push(tl.scrollTrigger);
   }
 
   ngOnDestroy(): void {
-    if (this.scrollTrigger) {
-      this.scrollTrigger.kill();
+    // Proper cleanup of all ScrollTriggers
+    this.scrollTriggers.forEach(trigger => {
+      if (trigger) {
+        trigger.kill();
+      }
+    });
+    
+    // Clear any animations on the element
+    if (this.isBrowser && this.el?.nativeElement) {
+      gsap.set(this.el.nativeElement, { clearProps: "all" });
     }
   }
 }
