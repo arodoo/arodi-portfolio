@@ -44,22 +44,16 @@ export class AboutComponent implements OnInit, OnDestroy {
     
     console.log('About component initialized, setting up animations');
     
-    // Setup debug panel updates
     this.setupDebugPanel();
     
-    // Make sure animations are enabled when the component loads - this is critical
     this.animationsEnabled = true;
     
-    // Force an initial scroll event - needed for animations on page load
     setTimeout(() => {
-      console.log('Triggering initial scroll/animation check');
-      window.dispatchEvent(new Event('scroll'));
       this.updateDebugState('Animations active - ready for scrolling');
     }, 500);
   }
   
   private setupDebugPanel(): void {
-    // Update the scroll position in the debug panel
     this.scrollListener = () => {
       this.updateScrollDebugPanel();
     };
