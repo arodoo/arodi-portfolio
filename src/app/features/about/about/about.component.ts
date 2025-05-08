@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AboutUsScrollAnimationLeavingDirective } from '../../../../shared/directives/about-us/about-us-scroll-animation-leaving.directive';
-import { AboutUsScrollAnimationDirective } from '../../../../shared/directives/about-us/about-us-scroll-animation.directive';
+import { AboutUsScrollAnimationLeavingDirective } from '../../../shared/directives/about-us/about-us-scroll-animation-leaving.directive';
+import { AboutUsScrollAnimationDirective } from '../../../shared/directives/about-us/about-us-scroll-animation.directive';
 
 @Component({
   selector: 'app-about',
