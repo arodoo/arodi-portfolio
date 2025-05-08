@@ -93,7 +93,7 @@ export class ServicesCardsScrollAnimationDirective implements OnInit, OnDestroy 
       defaults: { duration: 0.5, ease: "power2.inOut" }
     });
 
-    // Initial state - first set of cards appear
+    // PART 1: ENTRANCE - First set of cards appear
     const initialCards = Math.min(this.visibleCards, this.cardElements.length);
     for (let i = 0; i < initialCards; i++) {
       this.timeline.to(this.cardElements[i], {
@@ -102,7 +102,7 @@ export class ServicesCardsScrollAnimationDirective implements OnInit, OnDestroy 
       }, i * 0.1);
     }
 
-    // Cycle through remaining cards
+    // PART 2: CYCLING - Cycle through remaining cards
     if (this.cardElements.length > this.visibleCards) {
       for (let i = this.visibleCards; i < this.cardElements.length; i++) {
         // Create a label for this section
@@ -129,19 +129,33 @@ export class ServicesCardsScrollAnimationDirective implements OnInit, OnDestroy 
       }
     }
 
+    // PART 3: EXIT - All cards exit in reverse order (3,2,1)
+    this.timeline.addLabel("exitSequence", ">");
+
+    // First, handle the last visible cards
+    const lastVisibleIndex = Math.min(this.cardElements.length, this.cardElements.length) - 1;
+    const firstVisibleIndex = Math.max(0, lastVisibleIndex - this.visibleCards + 1);
+
+    // Remove the rightmost card first
+    for (let i = lastVisibleIndex; i >= firstVisibleIndex; i--) {
+      this.timeline.to(this.cardElements[i], {
+        x: containerWidth,
+        opacity: 0,
+        duration: 0.5
+      }, `exitSequence+=${(lastVisibleIndex - i) * 0.1}`);
+    }
+
     // Add final pause
-    this.timeline.addLabel("end", "+=0.5");
+    this.timeline.addLabel("end", "+=0.2");
 
     // Set up ScrollTrigger with pinning
     this.scrollTrigger = ScrollTrigger.create({
       trigger: this.el.nativeElement.parentElement, // Target parent section
-      start: "top center",
-      end: `+=300%`, // Extend scroll area to give enough room for animation
+      start: "center center", // Pin in the center of the viewport
+      end: `+=500%`, // Extend scroll area to give enough room for animation
       pin: true, // Pin the section in place during animation
       animation: this.timeline,
-      scrub: true, // Smooth scrubbing
-      anticipatePin: 1, // Helps with smoother pin initialization
-      pinSpacing: true // Create space for the pinned element
+      scrub: 1.5, // Smooth scrubbing
     });
   }
 }
