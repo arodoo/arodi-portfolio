@@ -3,7 +3,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
-import { AboutComponent } from '../../../about/about/about.component';
+import { AboutComponent } from '../../../about/components/about/about.component';
 
 //loading-bar
 import { LoadingService } from '../../../../core/services/loading.service';
