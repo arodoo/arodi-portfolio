@@ -24,19 +24,19 @@ export class AboutComponent implements OnInit {
 
   team = [
     {
-      name: 'Editorial Team',
-      description: 'Curating and reviewing poetry submissions',
-      icon: 'fa-edit'
+      name: 'Build Slowly',
+      description: 'Time makes things honest.',
+      icon: 'fa-hourglass-half'
     },
     {
-      name: 'Community Team',
-      description: 'Building and nurturing our poetry community',
-      icon: 'fa-users'
+      name: 'Listen Closely',
+      description: 'Every project tells you what it needs.',
+      icon: 'fa-ear-listen'
     },
     {
-      name: 'Technical Team',
-      description: 'Maintaining and improving the platform',
-      icon: 'fa-cog'
+      name: 'Stay Clear',
+      description: 'Simplicity is a form of respect.',
+      icon: 'fa-water'
     }
   ];
 

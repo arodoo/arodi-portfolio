@@ -30,47 +30,48 @@ export class ServicesComponent implements OnInit {
   serviceCards: ServiceCard[] = [
     {
       id: 1,
-      title: 'Web Development',
-      description: 'Custom websites and web applications tailored to your specific business needs.',
-      icon: 'fa-code',
-      imageUrl: 'assets/images/services/web-development.jpg'
+      title: 'Full-Stack Web Development',
+      description: 'Modern, scalable web applications using Angular, NestJS, TypeScript, and Docker. Tailored for SaaS platforms, internal tools, or custom business solutions.',
+      icon: 'fa-laptop-code',
+      imageUrl: 'assets/images/services/web-fullstack.jpg'
     },
     {
       id: 2,
-      title: 'Mobile Apps',
-      description: 'Native and cross-platform mobile applications for iOS and Android platforms.',
-      icon: 'fa-mobile-alt',
-      imageUrl: 'assets/images/services/mobile-apps.jpg'
+      title: 'SaaS Platform Engineering',
+      description: 'Design and development of complete SaaS systems: secure authentication, admin dashboards, automated testing, and continuous deployment pipelines.',
+      icon: 'fa-cloud',
+      imageUrl: 'assets/images/services/saas-development.jpg'
     },
     {
       id: 3,
-      title: 'UI/UX Design',
-      description: 'User-centered design with intuitive interfaces and exceptional user experiences.',
-      icon: 'fa-paint-brush',
-      imageUrl: 'assets/images/services/ui-ux-design.jpg'
+      title: 'Database Design & Management',
+      description: 'Efficient SQL database modeling, data normalization, and optimized querying. Perfect for data-driven applications and business-critical systems.',
+      icon: 'fa-database',
+      imageUrl: 'assets/images/services/database.jpg'
     },
     {
       id: 4,
-      title: 'E-commerce',
-      description: 'Full-featured online stores with secure payment processing and inventory management.',
-      icon: 'fa-shopping-cart',
-      imageUrl: 'assets/images/services/e-commerce.jpg'
+      title: 'Automated Testing & Code Quality',
+      description: 'End-to-end and unit testing using tools like Jest and Supertest to ensure robust, error-free software. Ideal for high-reliability applications.',
+      icon: 'fa-shield-alt',
+      imageUrl: 'assets/images/services/testing.jpg'
     },
     {
       id: 5,
-      title: 'Digital Marketing',
-      description: 'Strategic digital marketing solutions to grow your online presence and reach.',
-      icon: 'fa-bullhorn',
-      imageUrl: 'assets/images/services/digital-marketing.jpg'
+      title: 'API Development & Integration',
+      description: 'RESTful API design, secure JWT-based authentication, and seamless third-party integrations. Fast, secure, and scalable communication across systems.',
+      icon: 'fa-plug',
+      imageUrl: 'assets/images/services/api-integration.jpg'
     },
     {
       id: 6,
-      title: 'Content Management',
-      description: 'Custom CMS solutions that make content updates simple and efficient.',
-      icon: 'fa-file-alt',
-      imageUrl: 'assets/images/services/content-management.jpg'
+      title: 'Business Process Automation',
+      description: 'Automation of recurring operations like scheduling, invoicing, and inventory management. Drive efficiency through smart, reliable backend systems.',
+      icon: 'fa-cogs',
+      imageUrl: 'assets/images/services/automation.jpg'
     }
   ];
+
 
   ngOnInit() {
     if (!this.isBrowser) return;

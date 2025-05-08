@@ -1,11 +1,12 @@
 .footer-container {
-    //make the fotter being on its own row
     clear: both;
     position: relative;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     color: white;
     padding: 20px;
-    min-height: 100vh;
+    min-height: 30vh;
 }
 
 

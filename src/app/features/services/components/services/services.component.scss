@@ -6,13 +6,13 @@
 
 .section-title {
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 2rem;
 }
 
 .services-text {
     font-size: 1.1rem;
-    color: #555;
+    color: #ffffff;
     line-height: 1.8;
 }
 
@@ -21,11 +21,11 @@
     height: 450px;
     width: 100%;
     display: flex;
-    align-items: center; // Center cards vertically
+    align-items: center; 
 }
 
 .service-card-wrapper {
-    visibility: hidden; // Initially hidden, controlled by GSAP
+    visibility: hidden;
     top: 0;
 }
 
@@ -34,6 +34,8 @@
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0);
+    color: #ffffff;
 
     &:hover {
         transform: translateY(-5px);
