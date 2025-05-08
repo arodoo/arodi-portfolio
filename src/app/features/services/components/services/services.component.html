@@ -1,1 +1,49 @@
-<p>services works!</p>
+<section class="services-section">
+    <div class="container-fluid">
+        <section>
+            <h2 class="text-center section-title mb-4" id="services-heading">Our Services</h2>
+
+            <div class="row mb-4">
+                <div class="col-lg-10 mx-auto text-center">
+                    <p class="services-text">
+                        Discover how our expert team can help transform your vision into reality with our comprehensive
+                        range of services.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- This section will be pinned during animation -->
+        <section class="services-scroll-section">
+            <div class="cards-container" appServicesCardsScrollAnimation [cards]="serviceCards">
+                <div *ngFor="let card of serviceCards" class="col-md-4 position-absolute service-card-wrapper">
+                    <div class="card service-card text-center h-100 p-3">
+                        <div class="card-body">
+                            <div class="service-image mb-3">
+                                <img [src]="card.imageUrl" [alt]="card.title" class="img-fluid rounded">
+                            </div>
+                            <i class="fas {{card.icon}} icon mb-3"></i>
+                            <h4 class="card-title mb-3">{{card.title}}</h4>
+                            <p class="card-text">{{card.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto text-center">
+                    <div class="card service-card p-3">
+                        <h3 class="mb-2">Why Choose Us?</h3>
+                        <p class="services-text mb-0">
+                            We combine technical expertise with creative thinking to deliver solutions that not only
+                            meet your needs but exceed your expectations. Our collaborative approach ensures your vision
+                            is at the heart of everything we create.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
