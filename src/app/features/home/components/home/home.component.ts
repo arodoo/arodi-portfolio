@@ -4,6 +4,7 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 import { AboutComponent } from '../../../about/components/about/about.component';
+import { ServicesComponent } from '../../../services/components/services/services.component';
 
 //loading-bar
 import { LoadingService } from '../../../../core/services/loading.service';
@@ -17,7 +18,8 @@ import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/l
         HeaderComponent, 
         FooterComponent, 
         NavbarComponent,
-        AboutComponent
+        AboutComponent,
+        ServicesComponent
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
