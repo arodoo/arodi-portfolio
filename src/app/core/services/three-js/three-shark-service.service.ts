@@ -2,6 +2,7 @@ import { Injectable, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
+import { log } from 'node:console';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,15 @@ export class ThreeSharkServiceService {
   private clock = new THREE.Clock();
   private mixers: THREE.AnimationMixer[] = [];
   private sharkModel!: THREE.Group;
+  private initialized = false;
 
   constructor(@Inject(PLATFORM_ID) private platformID: Object) { }
 
   init(container: ElementRef<HTMLDivElement>): void {
+
+    if (this.initialized) {
+      return; // Prevent re-initialization
+    }
     if (isPlatformBrowser(this.platformID)) {
       this.setupRender(container);
       this.setupScene();

@@ -14,10 +14,14 @@ export class ThreeAnimatedFishesService {
   private clock = new THREE.Clock();
   private mixers: THREE.AnimationMixer[] = [];
   private fishesModel!: THREE.Group;
+  private initialized = false;
 
   constructor(@Inject(PLATFORM_ID) private platformID: Object) { }
 
   init(container: ElementRef<HTMLDivElement>): void {
+
+    if (this.initialized) return; // Prevent re-initialization
+    
     if (isPlatformBrowser(this.platformID)) {
       this.setUpRender(container);
       this.setUpScene();

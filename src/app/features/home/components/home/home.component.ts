@@ -11,6 +11,8 @@ import { ContactComponent } from '../../../contact/components/contact/contact.co
 import { LoadingService } from '../../../../core/services/loading.service';
 import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/loading-bar.component';
 
+import { SeparatorComponent } from '../../../../shared/components/separator/separator.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -21,7 +23,8 @@ import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/l
     NavbarComponent,
     AboutComponent,
     ServicesComponent,
-    ContactComponent
+    ContactComponent,
+    SeparatorComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

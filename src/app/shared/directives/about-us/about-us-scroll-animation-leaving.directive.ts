@@ -92,8 +92,8 @@ export class AboutUsScrollAnimationLeavingDirective implements OnInit, OnDestroy
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: element,
-          start: "top 60%",
-          end: "bottom 20%",
+          start: "top 35%",
+          end: "bottom 5%",
           scrub: 1,
           markers: false,
           invalidateOnRefresh: true,
