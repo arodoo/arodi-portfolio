@@ -62,10 +62,10 @@
 
 .services-scroll-section {
     position: relative;
-    overflow: visible; // Allow overflow for animations
-    height: 550px; // Enough height for cards and padding
+    overflow: visible; 
+    height: 550px; 
     display: flex;
-    align-items: center; // Vertically center the content
+    align-items: center;
 }
 
 .icon {
