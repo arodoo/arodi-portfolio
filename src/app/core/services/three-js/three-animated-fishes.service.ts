@@ -31,6 +31,7 @@ export class ThreeAnimatedFishesService {
       this.animate();
       this.loadFishModel(new THREE.Vector3(0, 0, 0));
     }
+    this.initialized = true;
   }
 
   loadFishModel(position: THREE.Vector3) {

@@ -79,6 +79,40 @@ mat-toolbar {
         }
 }
 
+.active-section {
+    position: relative;
+    color: #fff !important;
+    opacity: 1 !important;
+
+    .active-indicator {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 3px;
+        width: 30px;
+        background-color: #fff;
+        border-radius: 1.5px;
+        transition: all 0.3s ease;
+    }
+}
+
+
+// For mobile menu
+.mobile-menu {
+    .active-section {
+        background-color: rgba(255, 255, 255, 0.1);
+
+        .active-indicator {
+            left: 8px;
+            bottom: 50%;
+            transform: translateY(50%);
+            width: 3px;
+            height: 70%;
+        }
+    }
+}
+
 // Mobile menu styles
 .mobile-menu {
     position: fixed;

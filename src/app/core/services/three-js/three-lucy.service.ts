@@ -29,6 +29,7 @@ export class ThreeLucyService {
       this.addEventListeners();
       this.animate();
     }
+    
   }
 
   private setupRenderer(canvas: ElementRef<HTMLCanvasElement>): void {

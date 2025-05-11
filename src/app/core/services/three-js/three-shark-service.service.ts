@@ -36,6 +36,7 @@ export class ThreeSharkServiceService {
         this.loadSharkModel(new THREE.Vector3(-50, 80, -280));
       }, 1000);
     }
+    this.initialized = true;
   }
 
   loadSharkModel(position: THREE.Vector3) {
