@@ -9,7 +9,7 @@ import { ContactComponent } from '../../../contact/components/contact/contact.co
 
 //loading-bar
 import { LoadingService } from '../../../../core/services/loading.service';
-import { LoadingBarComponent } from '../../../../shared/animations/loading-bar/loading-bar.component';
+import { LoadingBarComponent } from '../../../../shared/components/loading-bar/loading-bar.component';
 
 import { SeparatorComponent } from '../../../../shared/components/separator/separator.component';
 
