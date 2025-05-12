@@ -66,7 +66,7 @@ export class AboutUsScrollAnimationLeavingDirective implements OnInit, OnDestroy
       const trigger = ScrollTrigger.create({
         trigger: element,
         start: "top 80%",
-        end: "bottom 60%",
+        end: "bottom 30%",
         markers: false,
         invalidateOnRefresh: true, // Critical for proper refresh handling
         onLeave: () => {
