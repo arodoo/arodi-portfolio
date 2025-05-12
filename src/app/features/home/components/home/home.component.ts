@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
-        this.loadingService.simulateLoading(5000);
+        this.loadingService.simulateLoading(15000);
       }, 100);
     }
   }
