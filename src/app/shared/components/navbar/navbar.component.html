@@ -8,24 +8,24 @@
       <span class="brand-name">Poetry</span>
     </div>
 
-    <!-- Desktop View (Navbar) -->
+    <!-- Desktop View (Navbar) - Now just decorative text -->
     <div class="nav-container d-none d-md-flex">
       @for (section of sections; track section) {
-      <button mat-button (click)="scrollToSection(section)" [class.active-section]="isActive(section)">
+      <div mat-button [class.active-section]="isActive(section)" class="nav-item">
         {{ section | titlecase }}
         <div class="active-indicator" *ngIf="isActive(section)"></div>
-      </button>
+      </div>
       }
     </div>
   </mat-toolbar>
 
-  <!-- Mobile Menu (Shows when toggled) -->
+  <!-- Mobile Menu (Shows when toggled) - Now just decorative text -->
   <div class="mobile-menu" [class.open]="isMobileMenuOpen()">
     @for (section of sections; track section) {
-    <button mat-button (click)="scrollToSection(section); closeMobileMenu()" [class.active-section]="isActive(section)">
+    <div mat-button (click)="closeMobileMenu()" [class.active-section]="isActive(section)" class="nav-item">
       {{ section | titlecase }}
       <div class="active-indicator" *ngIf="isActive(section)"></div>
-    </button>
+    </div>
     }
   </div>
 </nav>

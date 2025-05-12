@@ -1,3 +1,12 @@
+// Contact section styling
+#contact {
+    min-height: 80vh; // Makes the section much taller
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0; // Increased vertical padding
+}
+
 .service-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 8px;
@@ -5,9 +14,36 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     background-color: rgba(255, 255, 255, 0);
     color: #ffffff;
+    padding: 2.5rem !important; // Increased internal padding
+    max-width: 600px; // Control the max width
+    margin: 0 auto; // Center the card
 
     &:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    // Better styling for contact links
+    ul {
+        margin-top: 1.5rem;
+
+        li {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+
+            i {
+                margin-right: 0.75rem;
+                width: 20px;
+                text-align: center;
+            }
+
+            a {
+                transition: opacity 0.2s ease;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
     }
 }

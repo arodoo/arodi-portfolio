@@ -12,7 +12,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ScrollService } from '../../../core/services/scrollService/scroll.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
@@ -30,7 +29,6 @@ import { throttleTime } from 'rxjs/operators';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
-  private scrollService = inject(ScrollService);
   private destroyRef = inject(DestroyRef);
   private isBrowser: boolean;
 
@@ -47,11 +45,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    // Always start with home as the active section
+    this.activeSection.set('home');
+
     // Only subscribe to scroll events in the browser
     if (this.isBrowser) {
       fromEvent(window, 'scroll')
         .pipe(
-          throttleTime(150),
+          throttleTime(100), // More responsive updates
           takeUntilDestroyed(this.destroyRef)
         )
         .subscribe(() => {
@@ -66,7 +67,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     if (this.isBrowser) {
       setTimeout(() => {
         this.checkScrollPosition();
-        this.detectActiveSection();
+        // Initial detection after small delay
+        //this.detectActiveSection();
       }, 500);
     }
   }
@@ -86,7 +88,17 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   detectActiveSection(): void {
     if (!this.isBrowser) return;
 
-    // Find which section has the most visibility in the viewport
+    // Special case: If we're near the bottom of the page, activate the contact section
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    if (documentHeight - scrollPosition < 100) {
+      // If we're within 100px of the bottom, set contact as active
+      this.activeSection.set('contact');
+      return;
+    }
+
+    // Normal section detection logic
     const viewportHeight = window.innerHeight;
     let maxVisibleSection = '';
     let maxVisibleArea = 0;
@@ -95,9 +107,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       const element = document.getElementById(sectionId);
       if (element) {
         const rect = element.getBoundingClientRect();
+
         // Calculate how much of the element is visible
         const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-        const visibleArea = (visibleHeight > 0) ? visibleHeight * rect.width : 0;
+        let visibleArea = (visibleHeight > 0) ? visibleHeight * rect.width : 0;
+
+        // Prioritize sections near the top of the viewport
+        if (rect.top >= 0 && rect.top < viewportHeight * 0.5) {
+          visibleArea *= 1.5;  // Boost top-positioned sections
+        }
 
         if (visibleArea > maxVisibleArea) {
           maxVisibleArea = visibleArea;
@@ -108,15 +126,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     if (maxVisibleSection && maxVisibleSection !== this.activeSection()) {
       this.activeSection.set(maxVisibleSection);
-    }
-  }
-
-  scrollToSection(sectionId: string): void {
-    // Update active section immediately for better UX
-    this.activeSection.set(sectionId);
-
-    if (this.isBrowser) {
-      this.scrollService.scrollToElement(sectionId);
     }
   }
 
