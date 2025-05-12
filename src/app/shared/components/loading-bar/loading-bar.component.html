@@ -1,6 +1,9 @@
-<div *ngIf="loading$ | async "class="loading-container">
+<div *ngIf="loading$ | async" class="loading-container">
     <mat-card class="loading-card">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        <p>Cargando, por favor espera...</p>
+        <h2>Poetry</h2>
+        <mat-progress-bar [mode]="(progress$ | async) === 0 ? 'indeterminate' : 'determinate'"
+            [value]="progress$ | async"></mat-progress-bar>
+        <p>Loading amazing content...</p>
+        <p class="progress-text">{{ (progress$ | async)?.toFixed(0) }}%</p>
     </mat-card>
 </div>

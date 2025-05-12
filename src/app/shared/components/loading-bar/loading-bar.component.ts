@@ -1,66 +1,71 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { LoadingService } from '../../../core/services/loading.service';
-import { Subscription } from 'rxjs';
-
+import { Observable, Subscription } from 'rxjs';
 import { Renderer2, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+
 @Component({
-    selector: 'app-loading-bar',
-    imports: [CommonModule,
-        MatProgressBarModule,
-        MatCardModule
-    ],
-    templateUrl: './loading-bar.component.html',
-    styleUrl: './loading-bar.component.scss'
+  selector: 'app-loading-bar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatProgressBarModule,
+    MatCardModule
+  ],
+  templateUrl: './loading-bar.component.html',
+  styleUrl: './loading-bar.component.scss'
 })
 export class LoadingBarComponent implements OnInit, OnDestroy {
+  loading$: Observable<boolean>;
+  progress$: Observable<number>;
 
-  loading$;
-  private subscription!: Subscription;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private loadingService: LoadingService,
+  constructor(
+    private loadingService: LoadingService,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    // Initialize properties in the constructor after loadingService is injected
     this.loading$ = this.loadingService.loading$;
+    this.progress$ = this.loadingService.progress$;
   }
 
   ngOnInit(): void {
-    this.subscription = this.loading$.subscribe(isLoading =>{
-      if (isPlatformBrowser(this.platformId)) {
-        if(isLoading){
-         this.disableScroll();
-        }else{
-          this.enableScroll();
-        }
-      }
-    })
+    
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscriptions.push(
+        this.loading$.subscribe((isLoading: boolean) => {
+          if (isLoading) {
+        this.disableScroll();
+          } else {
+        this.enableScroll();
+          }
+        })
+      );
+    }
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscriptions.forEach(sub => sub.unsubscribe());
     if (isPlatformBrowser(this.platformId)) {
-      this.renderer.removeClass(document.body, 'loading-active');
+      this.enableScroll();
     }
   }
 
-  private disableScroll(){
+  private disableScroll() {
     if (isPlatformBrowser(this.platformId)) {
       this.renderer.setStyle(document.body, 'overflow', 'hidden');
     }
   }
 
-  private enableScroll(){
+  private enableScroll() {
     if (isPlatformBrowser(this.platformId)) {
       this.renderer.setStyle(document.body, 'overflow', 'auto');
     }
   }
-
 }
