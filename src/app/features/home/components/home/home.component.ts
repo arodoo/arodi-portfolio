@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
@@ -30,28 +30,24 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(
     private loadingService: LoadingService,
-    private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
+  ngOnInit(): void{
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadingService.setLoading(false);
+    }
+  }
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      // Run outside Angular zone to avoid triggering change detection
-      this.ngZone.runOutsideAngular(() => {
-        setTimeout(() => {
-          // Run back inside Angular when we want to update the UI
-          this.ngZone.run(() => {
-            this.loadingService.simulateLoading(5000);
-          });
-        }, 0);
-      });
-    } else {
-      // For SSR, don't show loading screen
-      this.loadingService.setLoading(false);
+      setTimeout(() => {
+        this.loadingService.simulateLoading(5000);
+      }, 100);
     }
   }
 }
