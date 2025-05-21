@@ -31,7 +31,7 @@ export class ServicesComponent implements OnInit {
     {
       id: 1,
       title: 'Full-Stack Web Development',
-      description: 'Modern, scalable web applications using Angular, NestJS, TypeScript, and Docker. Tailored for SaaS platforms, internal tools, or custom business solutions.',
+      description: 'Modern, scalable web applications using Angular, NestJS, TypeScript, React and Spring Boot. Tailored for SaaS platforms, internal tools, or custom business solutions.',
       icon: 'fa-laptop-code',
       imageUrl: 'assets/images/services/web-fullstack.png'
     },
