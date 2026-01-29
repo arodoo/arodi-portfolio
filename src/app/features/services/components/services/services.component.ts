@@ -30,44 +30,44 @@ export class ServicesComponent implements OnInit {
   serviceCards: ServiceCard[] = [
     {
       id: 1,
-      title: 'Full-Stack Web Development',
-      description: 'Modern, scalable web applications using Angular, NestJS, TypeScript, React and Spring Boot. Tailored for SaaS platforms, internal tools, or custom business solutions.',
-      icon: 'fa-laptop-code',
+      title: 'Multilingual Content Pipeline',
+      description: 'Automated translation system supporting 50+ languages. From English source text to localized audiobooks, fully automated through Google Vertex AI Translation API.',
+      icon: 'fa-globe',
       imageUrl: 'assets/images/services/web-fullstack.png'
     },
     {
       id: 2,
-      title: 'SaaS Platform Engineering',
-      description: 'Design and development of complete SaaS systems: secure authentication, admin dashboards, automated testing, and continuous deployment pipelines.',
-      icon: 'fa-cloud',
+      title: 'Neural Text-to-Speech Engine',
+      description: 'Studio-quality audiobook generation using Google Cloud Text-to-Speech with WaveNet and Neural2 voices. Supports natural intonation, emotion, and multilingual pronunciation.',
+      icon: 'fa-volume-up',
       imageUrl: 'assets/images/services/saas-development.png'
     },
     {
       id: 3,
-      title: 'Database Design & Management',
-      description: 'Efficient SQL database modeling, data normalization, and optimized querying. Perfect for data-driven applications and business-critical systems.',
-      icon: 'fa-database',
+      title: 'Metadata Enrichment & Formatting',
+      description: 'Automated ISBN generation, cover design, and platform-specific formatting for Audible, Google Play Books, and Apple Books. Ready-to-publish packages in minutes.',
+      icon: 'fa-book',
       imageUrl: 'assets/images/services/database.png'
     },
     {
       id: 4,
-      title: 'Automated Testing & Code Quality',
-      description: 'End-to-end and unit testing using tools like Jest and Supertest to ensure robust, error-free software. Ideal for high-reliability applications.',
-      icon: 'fa-shield-alt',
+      title: 'Public Domain Content Library',
+      description: 'Curated repository of public domain texts (Project Gutenberg, LibriVox) ready for conversion. Legal compliance and rights verification built into the workflow.',
+      icon: 'fa-archive',
       imageUrl: 'assets/images/services/testing.png'
     },
     {
       id: 5,
-      title: 'API Development & Integration',
-      description: 'RESTful API design, secure JWT-based authentication, and seamless third-party integrations. Fast, secure, and scalable communication across systems.',
-      icon: 'fa-plug',
+      title: 'Distribution API & Integration',
+      description: 'RESTful API for automated submission to audiobook platforms. Direct integration with ACX, Findaway Voices, and major retailers. Track royalties and sales analytics in real-time.',
+      icon: 'fa-network-wired',
       imageUrl: 'assets/images/services/api-integration.png'
     },
     {
       id: 6,
-      title: 'Business Process Automation',
-      description: 'Automation of recurring operations like scheduling, invoicing, and inventory management. Drive efficiency through smart, reliable backend systems.',
-      icon: 'fa-cogs',
+      title: 'Google Cloud Infrastructure',
+      description: 'Built on Google Cloud Run, Cloud Storage, and Vertex AI. Auto-scaling compute, 99.9% uptime SLA, and enterprise-grade security. Process thousands of books simultaneously.',
+      icon: 'fa-server',
       imageUrl: 'assets/images/services/automation.png'
     }
   ];

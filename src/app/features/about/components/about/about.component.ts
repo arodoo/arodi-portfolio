@@ -24,19 +24,19 @@ export class AboutComponent implements OnInit {
 
   team = [
     {
-      name: 'Build Slowly',
-      description: 'Time makes things honest.',
-      icon: 'fa-hourglass-half'
+      name: 'AI-Powered Translation',
+      description: 'Leverage Google Vertex AI to translate content into 50+ languages with human-level accuracy.',
+      icon: 'fa-language'
     },
     {
-      name: 'Listen Closely',
-      description: 'Every project tells you what it needs.',
-      icon: 'fa-ear-listen'
+      name: 'Automated Audio Production',
+      description: 'Convert text to studio-quality audiobooks instantly using advanced neural text-to-speech technology.',
+      icon: 'fa-microphone-alt'
     },
     {
-      name: 'Stay Clear',
-      description: 'Simplicity is a form of respect.',
-      icon: 'fa-water'
+      name: 'Scalable Infrastructure',
+      description: 'Enterprise-grade Google Cloud platform ensures reliable, high-throughput content processing at scale.',
+      icon: 'fa-cloud-upload-alt'
     }
   ];
 
