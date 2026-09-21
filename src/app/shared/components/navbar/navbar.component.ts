@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { auditTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     if (this.isBrowser) {
       fromEvent(window, 'scroll')
         .pipe(
-          throttleTime(100), // More responsive updates
+          auditTime(50), // Emits the final scroll position when scrolling settles
           takeUntilDestroyed(this.destroyRef)
         )
         .subscribe(() => {

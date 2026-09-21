@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
@@ -7,12 +7,9 @@ import { AboutComponent } from '../../../about/components/about/about.component'
 import { ServicesComponent } from '../../../services/components/services/services.component';
 import { ContactComponent } from '../../../contact/components/contact/contact.component';
 
-//loading-bar
-import { LoadingService } from '../../../../core/services/loading.service';
 import { LoadingBarComponent } from '../../../../shared/components/loading-bar/loading-bar.component';
 
 import { SeparatorComponent } from '../../../../shared/components/separator/separator.component';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -32,14 +29,5 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(
-    private loadingService: LoadingService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
-
-  ngOnInit(): void{
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadingService.setLoading(false);
-    }
-  }
+  ngOnInit(): void {}
 }

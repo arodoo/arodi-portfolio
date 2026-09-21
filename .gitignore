@@ -10,6 +10,10 @@
 /node_modules
 npm-debug.log
 
+# Dev server logs
+ng-serve.out.log
+ng-serve.err.log
+
 
 # IDEs and editors
 .idea/

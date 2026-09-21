@@ -6,14 +6,33 @@ mat-toolbar {
     right: 0;
     z-index: 1;
     background: transparent;
-    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.3s ease,
+        visibility 0s linear 0.3s,
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease,
+        -webkit-backdrop-filter 0.3s ease,
+        box-shadow 0.3s ease;
     padding: 1rem 2rem;
 
     &.scrolled {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
         background: rgba(0, 0, 0, 0.55);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         box-shadow: 0 2px 6px rgb(0, 0, 0);
+        transition:
+            opacity 0.3s ease,
+            visibility 0s linear 0s,
+            background-color 0.3s ease,
+            backdrop-filter 0.3s ease,
+            -webkit-backdrop-filter 0.3s ease,
+            box-shadow 0.3s ease;
 
         .nav-container button,
         .mobile-menu button {

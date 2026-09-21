@@ -2,7 +2,7 @@ import { Injectable, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
-import { log } from 'node:console';
+import { LoadingService } from '../loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,15 @@ export class ThreeSharkServiceService {
   private sharkModel!: THREE.Group;
   private initialized = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformID: Object) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformID: Object,
+    private loadingService: LoadingService
+  ) { }
 
   init(container: ElementRef<HTMLDivElement>): void {
 
     if (this.initialized) {
-      return; // Prevent re-initialization
+      return;
     }
     if (isPlatformBrowser(this.platformID)) {
       this.setupRender(container);
@@ -31,44 +34,52 @@ export class ThreeSharkServiceService {
       this.setupLighting();
       this.addEventListeners();
       this.animate();
-      this.loadSharkModel(new THREE.Vector3(-30, -30, 0));
+
+      this.loadingService.registerModels(2);
+      this.loadSharkModel(new THREE.Vector3(-30, -30, 0), 1);
       setTimeout(() => {
-        this.loadSharkModel(new THREE.Vector3(-50, 80, -280));
+        this.loadSharkModel(new THREE.Vector3(-50, 80, -280), 2);
       }, 1000);
     }
     this.initialized = true;
   }
 
-  loadSharkModel(position: THREE.Vector3) {
+  loadSharkModel(position: THREE.Vector3, modelId: number) {
     const loader = new GLTFLoader();
-    loader.load('models/glb/binary/megalodon.glb', (gltf) => {
-      const sharkModel = gltf.scene;
+    loader.load(
+      'models/glb/binary/megalodon.glb',
+      (gltf) => {
+        const sharkModel = gltf.scene;
 
-      //adjust position depending on window size
-      if(window.innerWidth < 600) {
-        sharkModel.position.set(position.x, position.y, position.z - 160)
-      }else{      
-      sharkModel.position.set(position.x, position.y, position.z)
+        if (window.innerWidth < 600) {
+          sharkModel.position.set(position.x, position.y, position.z - 160);
+        } else {
+          sharkModel.position.set(position.x, position.y, position.z);
+        }
+        sharkModel.rotation.y = Math.PI / 2;
+        sharkModel.rotation.x = (Math.PI / 2);
+        this.scene.add(sharkModel);
+
+        this.setUpAnimation(gltf.animations, sharkModel);
+        this.loadingService.notifyModelComplete(modelId);
+      },
+      (xhr) => {
+        if (xhr.lengthComputable) {
+          this.loadingService.reportModelProgress(modelId, xhr.loaded, xhr.total);
+        }
+      },
+      (error) => {
+        console.error(error);
+        this.loadingService.notifyModelComplete(modelId);
       }
-      sharkModel.rotation.y = Math.PI / 2;
-      sharkModel.rotation.x = (Math.PI / 2);
-      this.scene.add(sharkModel);
-
-
-      // Exponer el modelo globalmente
-      /*       (window as any).sharkModel = this.sharkModel; */
-
-      this.setUpAnimation(gltf.animations, sharkModel);
-    }, undefined, (error) => {
-      console.error(error);
-    });
+    );
   }
 
   private setUpAnimation(animations: THREE.AnimationClip[], model: THREE.Group): void {
     const mixer = new THREE.AnimationMixer(model);
     animations.forEach(clip => {
       this.adjustAndConfigureAnimation(mixer, clip);
-    })
+    });
     this.mixers.push(mixer);
   }
 
@@ -134,10 +145,10 @@ export class ThreeSharkServiceService {
   }
 
   public loadSharkModel1(): void {
-    this.loadSharkModel(new THREE.Vector3(-30, -30, 0));
+    this.loadSharkModel(new THREE.Vector3(-30, -30, 0), 1);
   }
 
   public loadSharkModel2(): void {
-    this.loadSharkModel(new THREE.Vector3(-40, 80, -280));
+    this.loadSharkModel(new THREE.Vector3(-40, 80, -280), 2);
   }
 }
