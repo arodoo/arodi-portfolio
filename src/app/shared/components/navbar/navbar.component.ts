@@ -78,7 +78,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
    */
   checkScrollPosition(): void {
     if (this.isBrowser) {
-      this.isScrolled.set(window.scrollY > 50);
+      this.isScrolled.set(window.scrollY > 0);
     }
   }
 

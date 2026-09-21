@@ -10,6 +10,9 @@ mat-toolbar {
     padding: 1rem 2rem;
 
     &.scrolled {
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         box-shadow: 0 2px 6px rgb(0, 0, 0);
 
         .nav-container button,

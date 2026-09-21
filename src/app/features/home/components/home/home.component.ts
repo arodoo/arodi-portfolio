@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
@@ -30,7 +30,7 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
 
   constructor(
     private loadingService: LoadingService,
@@ -40,14 +40,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void{
     if (isPlatformBrowser(this.platformId)) {
       this.loadingService.setLoading(false);
-    }
-  }
-
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.loadingService.simulateLoading(25000);
-      }, 100);
     }
   }
 }
