@@ -77,18 +77,13 @@ export class ThreeSharkServiceService {
 
   private setUpAnimation(animations: THREE.AnimationClip[], model: THREE.Group): void {
     const mixer = new THREE.AnimationMixer(model);
-    animations.forEach(clip => {
-      this.adjustAndConfigureAnimation(mixer, clip);
-    });
+    animations.forEach(clip => this.configureAnimation(mixer, clip));
     this.mixers.push(mixer);
   }
 
-  private adjustAndConfigureAnimation(mixer: THREE.AnimationMixer, clip: THREE.AnimationClip): void {
-    const adjustedClip = THREE.AnimationClip.parse(THREE.AnimationClip.toJSON(clip));
-    adjustedClip.duration -= .05;
-    const action = mixer.clipAction(adjustedClip);
+  private configureAnimation(mixer: THREE.AnimationMixer, clip: THREE.AnimationClip): void {
+    const action = mixer.clipAction(clip);
     action.loop = THREE.LoopRepeat;
-    action.clampWhenFinished = true;
     action.play();
   }
 
